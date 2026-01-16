@@ -68,7 +68,7 @@ This repository contains a quick-start script that runs the `gogolf-api` contain
         - "8080:8080"
     ```
 
-7. Run `setup-db.sh` to start the API and database containers, and run the goose migration.
+7. Run `setup.sh` to start the API and database containers, and run the goose migration.
 
     ```
     chmod +x setup-db.sh

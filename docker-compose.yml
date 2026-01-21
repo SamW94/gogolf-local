@@ -7,6 +7,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:       
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
     ports:
       - "5432:5432"
     volumes:
@@ -21,6 +23,28 @@ services:
       DB_URL: ${DB_URL_DOCKER}
     ports: 
       - "8080:8080"
+
+  migrations: 
+    image: ghcr.io/kukymbr/goose-docker:3.26.0
+    restart: no
+    env_file:
+      - .env
+
+    depends_on:
+      db:
+        condition:
+          service_healthy
+
+    environment:
+      - GOOSE_DRIVER=${GOOSE_DRIVER}
+      - GOOSE_DBSTRING=host=db port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB}
+      - GOOSE_VERBOSE=true
+      - GOOSE_COMMAND=up
+
+    volumes:
+      - ${GOOSE_MIGRATIONS_DIRECTORY}:/migrations
+      
+    
 
 volumes:
   gogolf_pgdata:

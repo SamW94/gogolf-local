@@ -2,16 +2,13 @@
 ## RUN `cp sample-env .env` AND MAKE CHANGES TO THE .env FILE.
 
 ## The user/password/dbname you want to use, and the connection string the API uses to connect to the database.
+## The GOOSE_MIGRATIONS_DIRECTORY is the full directory path to the gogolf-api/sql/schema directory in the gogolf-api repository (wherever you have it cloned)
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=gogolf
+GOOSE_MIGRATIONS_DIRECTORY=/home/user/git/SamW94/gogolf-api/sql/schema
 DB_URL_DOCKER="postgres://user:password@gogolf-postgres:5432/gogolf?sslmode=disable"
 
-## The port the API will run on.
-INTERNAL_PORT="8080"
-
-## The environmment variables required to run the database migrations. 
-## The GOOSE_MIGRATIONS_DIRECTORY is the full directory path to the gogolf-api/sql/schema directory in the gogolf-api repository (wherever you have it cloned)
-GOOSE_DBSTRING="postgres://user:password@localhost:5432/gogolf?sslmode=disable"
-GOOSE_DRIVER="postgres"
-GOOSE_MIGRATIONS_DIRECTORY=/home/user/git/SamW94/gogolf-api/sql/schema
+## The port the API will run on - this is used by both the API container and the web container for communication between them.
+API_HOST="gogolf-api"
+API_PORT="8080"

@@ -44,7 +44,7 @@ Describe how reviewers can verify the change with as much detail as necessary. I
 
 Before submitting for review, please confirm:
 
-* [ ] `setup.sh` starts the API container and the database successfully.
+* [ ] `docker-compose up -d` starts all of the containers successfully.
 * [ ] Relevant documentation has been updated
 * [ ] No secrets, keys, or sensitive data has been committed
 

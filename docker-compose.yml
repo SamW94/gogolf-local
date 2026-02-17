@@ -14,37 +14,49 @@ services:
     volumes:
       - gogolf_pgdata:/var/lib/postgresql
   
-  api:
-    image: ghcr.io/samw94/gogolf-api:v0.0.1
-    container_name: gogolf-api
-    restart: unless-stopped
-    environment:
-      INTERNAL_PORT: 8080
-      DB_URL: ${DB_URL_DOCKER}
-    ports: 
-      - "8080:8080"
-
   migrations: 
     image: ghcr.io/kukymbr/goose-docker:3.26.0
     restart: no
     env_file:
       - .env
+    depends_on:
+      db:
+        condition:
+          service_healthy
+    environment:
+      - GOOSE_DRIVER=postgres
+      - GOOSE_DBSTRING=host=db port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB}
+      - GOOSE_VERBOSE=true
+      - GOOSE_COMMAND=up
+    volumes:
+      - ${GOOSE_MIGRATIONS_DIRECTORY}:/migrations
 
+  api:
+    image: ghcr.io/samw94/gogolf-api:v0.0.1
+    container_name: ${API_HOST}
+    restart: unless-stopped
+    environment:
+      INTERNAL_PORT: 80
+      DB_URL: ${DB_URL_DOCKER}
+    ports: 
+      - "8080:80"
     depends_on:
       db:
         condition:
           service_healthy
 
+  frontend:
+    image: ghcr.io/samw94/gogolf-web:dev
+    container_name: gogolf-web
+    ports: 
+      - "3000:80"
+    depends_on: 
+      - api
+    env_file:
+      - .env
     environment:
-      - GOOSE_DRIVER=${GOOSE_DRIVER}
-      - GOOSE_DBSTRING=host=db port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB}
-      - GOOSE_VERBOSE=true
-      - GOOSE_COMMAND=up
-
-    volumes:
-      - ${GOOSE_MIGRATIONS_DIRECTORY}:/migrations
-      
-    
+      - API_HOST=${API_HOST}
+      - API_PORT=${API_PORT}
 
 volumes:
   gogolf_pgdata:

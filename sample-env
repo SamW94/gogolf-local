@@ -9,6 +9,6 @@ POSTGRES_DB=gogolf
 GOOSE_MIGRATIONS_DIRECTORY=/home/user/git/SamW94/gogolf-api/sql/schema
 DB_URL_DOCKER="postgres://user:password@gogolf-postgres:5432/gogolf?sslmode=disable"
 
-## The port the API will run on - this is used by both the API container and the web container for communication between them.
+## The port the API will run on
 API_HOST="gogolf-api"
 API_PORT="8080"

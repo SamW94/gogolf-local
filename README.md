@@ -7,13 +7,11 @@ You're currently looking at the supplementary repository for running the API (an
 ## 🏌️ Related Repositories (More Coming Soon™)
 
 - [gogolf-api](https://github.com/SamW94/gogolf-api): gogolf's backend microservice/API
-- [gogolf-web](https://github.com/SamW94/gogolf-web): gogolf's frontend microservice. 
 - [gogolf-cli](https://github.com/SamW94/gogolf-cli): CLI tool that interacts with the API
-
 
 ## 🛺 What's in the box? 
 
-This repository contains a quick-start script that runs the `gogolf-api` container, the `gogolf-web` container and a PostgreSQL database using `docker compose`. It will also run the goose migrations for you, so the application is ready to go.
+This repository contains a quick-start script that runs the `gogolf-api` container and a PostgreSQL database using `docker compose`. It will also run the goose migrations for you, so the application is ready to go.
 
 ## 🚩 How do I run it?
 
@@ -59,6 +57,6 @@ This repository contains a quick-start script that runs the `gogolf-api` contain
         - "8080:8080"
     ```
 
-7. Run `docker compose up -d` to start the API, web and database containers, and run the goose migration.
+7. Run `docker compose up -d` to start the API and database containers, and run the goose migration.
 
-8. The API is serving traffic on `http://localhost:8080` - test it out using Postman, curl or the frontend at `http://localhost:3000`!
+8. The API is serving traffic on `http://localhost:8080` - test it out using Postman or curl!
